@@ -9,25 +9,29 @@ def render_index_page():
     """Render the HTML index page."""
     return render_template("index.html")
 
+
 @app.route("/emotionDetector")
 def sent_detector():
     """Analyze text submitted through the web page."""
     text_to_analyze = request.args.get("textToAnalyze")
     response = emotion_detector(text_to_analyze)
 
-    #dominant = response["dominant_emotion"]
-    #if dominant == "":
-    #    return "Invalid input! Try again."
-    #else:
-    response_str = ""
-    for item in response:
-        response_str += "'" + item + "'" + ': ' + str(response[item]) + ', '
-    dominant = response["dominant_emotion"]
-    return (
-    f"For the given statement, the system response is "
-    f"{response_str}."
-    f"The dominant emotion is {dominant}"
+    # Handle blank or invalid input
+    if None in response.values():
+        return "Invalid text! Please try again!"
+
+    response_str = (
+        f"For the given statement, the system response is "
+        f"'anger': {response['anger']}, "
+        f"'disgust': {response['disgust']}, "
+        f"'fear': {response['fear']}, "
+        f"'joy': {response['joy']} and "
+        f"'sadness': {response['sadness']}. "
+        f"The dominant emotion is "
+        f"<b>{response['dominant_emotion']}</b>."
     )
+
+    return response_str
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
