@@ -15,15 +15,18 @@ def sent_detector():
     text_to_analyze = request.args.get("textToAnalyze")
     response = emotion_detector(text_to_analyze)
 
+    #dominant = response["dominant_emotion"]
+    #if dominant == "":
+    #    return "Invalid input! Try again."
+    #else:
     response_str = ""
     for item in response:
         response_str += "'" + item + "'" + ': ' + str(response[item]) + ', '
     dominant = response["dominant_emotion"]
-    
     return (
-        f"For the given statement, the system response is "
-        f"{response_str}."
-        f"The dominant emotion is {dominant}"
+    f"For the given statement, the system response is "
+    f"{response_str}."
+    f"The dominant emotion is {dominant}"
     )
 
 if __name__ == "__main__":
