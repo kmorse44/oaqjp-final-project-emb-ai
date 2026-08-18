@@ -9,7 +9,6 @@ def render_index_page():
     """Render the HTML index page."""
     return render_template("index.html")
 
-
 @app.route("/emotionDetector")
 def sent_detector():
     """Analyze text submitted through the web page."""
@@ -19,7 +18,6 @@ def sent_detector():
     # Handle blank or invalid input
     if None in response.values():
         return "Invalid text! Please try again!"
-
     response_str = (
         f"For the given statement, the system response is "
         f"'anger': {response['anger']}, "
@@ -30,8 +28,7 @@ def sent_detector():
         f"The dominant emotion is "
         f"<b>{response['dominant_emotion']}</b>."
     )
-
     return response_str
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+    
